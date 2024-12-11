@@ -1,0 +1,91 @@
+#
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "field:product.product,available_quantity:"
+msgid "Available Quantity"
+msgstr "Quantitat disponible"
+
+msgctxt "field:product.product,incoming_quantity:"
+msgid "Incoming Quantity"
+msgstr "Quantitat entrades"
+
+msgctxt "field:product.product,outgoing_quantity:"
+msgid "Outgoing Quantity"
+msgstr "Quantitat sortides"
+
+msgctxt "field:product.template,available_quantity:"
+msgid "Available Quantity"
+msgstr "Quantitat disponible"
+
+msgctxt "field:product.template,incoming_quantity:"
+msgid "Incoming Quantity"
+msgstr "Quantitat entrades"
+
+msgctxt "field:product.template,outgoing_quantity:"
+msgid "Outgoing Quantity"
+msgstr "Quantitat sortides"
+
+msgctxt "field:stock.configuration,lag_days:"
+msgid "Number of lag days"
+msgstr "Número de dies de decalatge"
+
+msgctxt "field:stock.configuration,warehouse_quantity:"
+msgid "Warehouse Quantity"
+msgstr "Quantitat magatzem"
+
+msgctxt "field:stock.configuration.product_quantity,company:"
+msgid "Company"
+msgstr "Empresa"
+
+msgctxt "field:stock.configuration.product_quantity,lag_days:"
+msgid "Number of lag days"
+msgstr "Número de dies de decalatge"
+
+msgctxt "field:stock.configuration.product_quantity,warehouse_quantity:"
+msgid "Warehouse Quantity"
+msgstr "Quantitat magatzem"
+
+msgctxt "field:stock.location,available_quantity:"
+msgid "Available Quantity"
+msgstr "Quantitat disponible"
+
+msgctxt "field:stock.location,incoming_quantity:"
+msgid "Incoming Quantity"
+msgstr "Quantitat entrades"
+
+msgctxt "field:stock.location,outgoing_quantity:"
+msgid "Outgoing Quantity"
+msgstr "Quantitat sortides"
+
+msgctxt "field:stock.lot,available_quantity:"
+msgid "Available Quantity"
+msgstr "Quantitat disponible"
+
+msgctxt "field:stock.lot,incoming_quantity:"
+msgid "Incoming Quantity"
+msgstr "Quantitat entrades"
+
+msgctxt "field:stock.lot,outgoing_quantity:"
+msgid "Outgoing Quantity"
+msgstr "Quantitat sortides"
+
+msgctxt "model:stock.configuration.product_quantity,name:"
+msgid "Stock Configuration - Product Quantity"
+msgstr "Configuració logística - Quantitat producte"
+
+msgctxt "selection:stock.configuration,warehouse_quantity:"
+msgid "All Warehouses"
+msgstr "Tots els magatzems"
+
+msgctxt "selection:stock.configuration,warehouse_quantity:"
+msgid "User Warehouse"
+msgstr "Magatzem de l'usuari"
+
+msgctxt "selection:stock.configuration.product_quantity,warehouse_quantity:"
+msgid "All Warehouses"
+msgstr "Tots els magatzems"
+
+msgctxt "selection:stock.configuration.product_quantity,warehouse_quantity:"
+msgid "User Warehouse"
+msgstr "Magatzem de l'usuari"
