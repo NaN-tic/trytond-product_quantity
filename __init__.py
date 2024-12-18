@@ -13,8 +13,10 @@ def register():
         product.Template,
         product.Product,
         stock.Location,
+        stock.ProductsByLocations,
         module='product_quantity', type_='model')
     Pool.register(
         stock.Lot,
+        stock.LotsByLocations,
         depends=['stock_lot'],
         module='product_quantity', type_='model')

@@ -14,3 +14,23 @@ class Location(QuantityMixin, metaclass=PoolMeta):
 
 class Lot(QuantityMixin, metaclass=PoolMeta):
     __name__ = 'stock.lot'
+
+
+class ProductsByLocations(metaclass=PoolMeta):
+    __name__ = 'stock.products_by_locations'
+    available_quantity = fields.Function(fields.Float('Available Quantity'),
+        'get_product', searcher='search_product')
+    incoming_quantity = fields.Function(fields.Float('Incoming Quantity'),
+        'get_product', searcher='search_product')
+    outgoing_quantity = fields.Function(fields.Float('Outgoing Quantity'),
+        'get_product', searcher='search_product')
+
+
+class LotsByLocations(metaclass=PoolMeta):
+    __name__ = 'stock.lots_by_locations'
+    available_quantity = fields.Function(fields.Float('Available Quantity'),
+        'get_lot', searcher='search_lot')
+    incoming_quantity = fields.Function(fields.Float('Incoming Quantity'),
+        'get_lot', searcher='search_lot')
+    outgoing_quantity = fields.Function(fields.Float('Outgoing Quantity'),
+        'get_lot', searcher='search_lot')

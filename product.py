@@ -53,7 +53,7 @@ class QuantityMixin:
 
         context = Transaction().context
 
-        location_ids = []
+        location_ids = context.get('locations', [])
         if not context.get('locations'):
             config = Configuration(1)
             warehouse_id = context.get('warehouse')

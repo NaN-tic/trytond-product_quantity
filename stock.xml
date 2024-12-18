@@ -13,13 +13,20 @@
             <field name="inherit" ref="stock.location_quantity_view_list"/>
             <field name="name">location_quantity_tree</field>
         </record>
+
+        <record model="ir.ui.view" id="products_by_locations_view_list">
+            <field name="model">stock.products_by_locations</field>
+            <field name="inherit" ref="stock.products_by_locations_view_list"/>
+            <field name="name">products_by_locations_list</field>
+        </record>
     </data>
+
     <data depends="stock_lot">
         <!-- stock.lot -->
-        <record model="ir.ui.view" id="lot_view_tree">
-            <field name="model">stock.lot</field>
-            <field name="inherit" ref="stock_lot.lot_view_tree"/>
-            <field name="name">lot_tree</field>
+        <record model="ir.ui.view" id="lots_by_locations_view_list">
+            <field name="model">stock.lots_by_locations</field>
+            <field name="inherit" ref="stock_lot.lots_by_locations_view_list"/>
+            <field name="name">lots_by_locations_list</field>
         </record>
     </data>
 </tryton>
