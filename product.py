@@ -116,7 +116,7 @@ class QuantityByMixin:
         location_ids = list(set(x.id for x in locations))
 
         sql_where = move.company == context.get('company', -1)
-        sql_where &= ~move.state.in_(('done', 'cancelled'))
+        sql_where &= move.state == 'draft'
         if product_ids:
             sql_where &= move.product.in_(product_ids)
         if direction == 'in':
