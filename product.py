@@ -1,6 +1,7 @@
 # This file is part product_quantity module for Tryton.
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
+import operator
 from dateutil.relativedelta import relativedelta
 from trytond.pool import Pool, PoolMeta
 from trytond.model import fields
@@ -83,14 +84,13 @@ class QuantityByMixin:
             return res
 
         direction = 'in' if name == 'incoming_quantity' else 'out'
-        quantities = cls._get_in_out_quantity(product_ids, direction)
-        if quantities:
-            for product_id in product_ids:
-                res[product_id] = quantities.get(product_id, 0)
+        pbl = cls._get_in_out_quantity(product_ids, direction)
+        for product_id in product_ids:
+            res[product_id] = pbl.get(product_id, 0)
         return res
 
     @classmethod
-    def _get_in_out_quantity(cls, product_ids, direction='in'):
+    def _get_in_out_quantity(cls, product_ids=[], direction='in'):
         pool = Pool()
         Date = pool.get('ir.date')
         Product = pool.get('product.product')
@@ -107,7 +107,7 @@ class QuantityByMixin:
         if not location_ids:
             location_ids = cls._quantity_locations()
         if not location_ids:
-            return
+            return {}
 
         locations = Location.search([
                 ('parent', 'child_of', location_ids),
@@ -115,9 +115,10 @@ class QuantityByMixin:
                 ])
         location_ids = list(set(x.id for x in locations))
 
-        sql_where = move.product.in_(product_ids)
-        sql_where &= move.company == context.get('company', -1)
+        sql_where = move.company == context.get('company', -1)
         sql_where &= ~move.state.in_(('done', 'cancelled'))
+        if product_ids:
+            sql_where &= move.product.in_(product_ids)
         if direction == 'in':
             location_supplier_ids = [l.id for l in Location.search([
                 ('type', '=', 'supplier'),
@@ -142,8 +143,28 @@ class QuantityByMixin:
 
     @classmethod
     def search_in_out_quantity(cls, name, domain=None):
-        # TODO
-        pass
+        _, operator_, operand = domain
+
+        direction = 'in' if name == 'incoming_quantity' else 'out'
+        pbl = cls._get_in_out_quantity(product_ids=[], direction=direction)
+
+        operator_ = {
+            '=': operator.eq,
+            '>=': operator.ge,
+            '>': operator.gt,
+            '<=': operator.le,
+            '<': operator.lt,
+            '!=': operator.ne,
+            'in': lambda v, l: v in l,
+            'not in': lambda v, l: v not in l,
+            }.get(operator_, lambda v, l: False)
+        record_ids = []
+        for product, quantity in pbl.items():
+            if (quantity is not None and operand is not None
+                    and operator_(quantity, operand)):
+                record_ids.append(product)
+
+        return [('id', 'in', record_ids)]
 
 
 class Template(metaclass=PoolMeta):

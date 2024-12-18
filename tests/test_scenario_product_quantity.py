@@ -260,3 +260,15 @@ class Test(unittest.TestCase):
         product_by_loc2.reload()
         self.assertEqual(product_by_loc2.incoming_quantity, 50.0)
         self.assertEqual(product_by_loc2.outgoing_quantity, 40.0)
+        self.assertEqual(len(ProductByLocations.find([
+            ('product', '=', product2),('incoming_quantity', '>', 30)])), 1)
+        self.assertEqual(len(ProductByLocations.find([
+            ('product', '=', product2),('incoming_quantity', '=', 50)])), 1)
+        self.assertEqual(len(ProductByLocations.find([
+            ('product', '=', product2),('incoming_quantity', '<', 50)])), 0)
+        self.assertEqual(len(ProductByLocations.find([
+            ('product', '=', product2),('outgoing_quantity', '>', 30)])), 1)
+        self.assertEqual(len(ProductByLocations.find([
+            ('product', '=', product2),('outgoing_quantity', '=', 40)])), 1)
+        self.assertEqual(len(ProductByLocations.find([
+            ('product', '=', product2),('outgoing_quantity', '<', 40)])), 0)
