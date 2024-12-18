@@ -112,6 +112,7 @@ class Test(unittest.TestCase):
         Warning(user=config.user, name=key).save()
         move.click('do')
 
+        product.reload()
         self.assertEqual(product.quantity, 100.0)
         self.assertEqual(product.forecast_quantity, 150.0)
         self.assertEqual(product.available_quantity, 100.0)
@@ -153,6 +154,17 @@ class Test(unittest.TestCase):
         # Qty product and product2 are 100
         self.assertEqual(len(Product.find([('quantity', '=', 100)])), 2)
 
+        # check quantity by
+        ProductByLocations = Model.get('stock.products_by_locations')
+        product_by_loc2, = ProductByLocations.find([
+            ('product', '=', product2),
+            ], limit=1)
+        self.assertEqual(product_by_loc2.quantity, 100.0)
+        self.assertEqual(product_by_loc2.forecast_quantity, 100.0)
+        self.assertEqual(product_by_loc2.available_quantity, 100.0)
+        self.assertEqual(product_by_loc2.incoming_quantity, 0.0)
+        self.assertEqual(product_by_loc2.outgoing_quantity, 0.0)
+
         # move qty 10 to incoming move
         move = Move(
             from_location=supplier_loc,
@@ -181,8 +193,15 @@ class Test(unittest.TestCase):
         self.assertEqual(product2.quantity, 80.0)
         self.assertEqual(product2.forecast_quantity, 80.0)
         self.assertEqual(product2.available_quantity, 80.0)
-        self.assertEqual(product2.incoming_quantity, 10.0)
-        self.assertEqual(product2.outgoing_quantity, 20.0)
+        self.assertEqual(product2.incoming_quantity, 0.0)
+        self.assertEqual(product2.outgoing_quantity, 0.0)
+
+        product_by_loc2.reload()
+        self.assertEqual(product_by_loc2.quantity, 80.0)
+        self.assertEqual(product_by_loc2.forecast_quantity, 80.0)
+        self.assertEqual(product_by_loc2.available_quantity, 80.0)
+        self.assertEqual(product_by_loc2.incoming_quantity, 0.0)
+        self.assertEqual(product_by_loc2.outgoing_quantity, 0.0)
 
         # finally product2 sould out
         move = Move(
@@ -201,8 +220,8 @@ class Test(unittest.TestCase):
         self.assertEqual(product2.quantity, 0.0)
         self.assertEqual(product2.forecast_quantity, 00.0)
         self.assertEqual(product2.available_quantity, 0.0)
-        self.assertEqual(product2.incoming_quantity, 10.0)
-        self.assertEqual(product2.outgoing_quantity, 20.0)
+        self.assertEqual(product2.incoming_quantity, 0.0)
+        self.assertEqual(product2.outgoing_quantity, 0.0)
 
         # Search product that qty is 100 and qty is 0
         qty_100, = Product.find([('quantity', '=', 100)])
@@ -210,3 +229,34 @@ class Test(unittest.TestCase):
 
         qty_0, = Product.find([('quantity', '=', 0)])
         self.assertEqual(qty_0, product2)
+
+        # Incomming and outgoing product
+        move = Move(
+            from_location=supplier_loc,
+            to_location=storage,
+            product=product2,
+            unit=product2.default_uom,
+            unit_price=Decimal(10),
+            currency=company.currency,
+            quantity=50.0,
+            )
+        move.save()
+
+        move = Move(
+            from_location=storage,
+            to_location=customer_loc,
+            product=product2,
+            unit=product2.default_uom,
+            unit_price=Decimal(10),
+            currency=company.currency,
+            quantity=40.0,
+            )
+        move.save()
+
+        product2.reload()
+        self.assertEqual(product2.incoming_quantity, 50.0)
+        self.assertEqual(product2.outgoing_quantity, 40.0)
+
+        product_by_loc2.reload()
+        self.assertEqual(product_by_loc2.incoming_quantity, 50.0)
+        self.assertEqual(product_by_loc2.outgoing_quantity, 40.0)

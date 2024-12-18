@@ -5,14 +5,14 @@ from dateutil.relativedelta import relativedelta
 from trytond.pool import Pool, PoolMeta
 from trytond.model import fields
 from trytond.transaction import Transaction
-from trytond.modules.product_quantity.product import QuantityMixin
+from trytond.modules.product_quantity.product import QuantityMixin, QuantityByMixin
 
 
 class Location(QuantityMixin, metaclass=PoolMeta):
     __name__ = 'stock.location'
 
 
-class Lot(QuantityMixin, metaclass=PoolMeta):
+class Lot(QuantityMixin, QuantityByMixin, metaclass=PoolMeta):
     __name__ = 'stock.lot'
 
 

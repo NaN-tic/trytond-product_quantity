@@ -5,15 +5,13 @@ from dateutil.relativedelta import relativedelta
 from trytond.pool import Pool, PoolMeta
 from trytond.model import fields
 from trytond.transaction import Transaction
+from sql.aggregate import Sum
+from sql.conditionals import Coalesce
 
 
 class QuantityMixin:
     __slots__ = ()
     available_quantity = fields.Function(fields.Float('Available Quantity'),
-        'get_quantity', searcher='search_quantity')
-    incoming_quantity = fields.Function(fields.Float('Incoming Quantity'),
-        'get_quantity', searcher='search_quantity')
-    outgoing_quantity = fields.Function(fields.Float('Outgoing Quantity'),
         'get_quantity', searcher='search_quantity')
 
     @classmethod
@@ -31,22 +29,12 @@ class QuantityMixin:
             new_context['stock_assign'] = True
             new_context['stock_date_end'] = today
             new_context['with_childs'] = True
-        elif name == 'incoming_quantity':
-            # new_context['forecast'] = False
-            new_context['stock_date_end'] = today
-            # new_context['forecast_date'] = today
-            new_context['with_childs'] = False
-        elif name == 'outgoing_quantity':
-            new_context['forecast'] = True
-            new_context['stock_date_end'] = today
-            new_context['forecast_date'] = today
-            new_context['with_childs'] = False
         else:
             new_context = super()._quantity_context(name)
         return new_context
 
     @classmethod
-    def _quantity_locations(cls, name):
+    def _quantity_locations(cls, name=None):
         pool = Pool()
         Configuration = pool.get('stock.configuration')
         Location = pool.get('stock.location')
@@ -59,18 +47,11 @@ class QuantityMixin:
             warehouse_id = context.get('warehouse')
 
             warehouses = []
-            if config.warehouse_quantity == 'all':
-                warehouses = Location.search([('type', '=', 'warehouse')])
-            elif warehouse_id and config.warehouse_quantity == 'user':
+            if warehouse_id and config.warehouse_quantity == 'user':
                 warehouses = [Location(warehouse_id)]
-
-            if name == 'incoming_quantity':
-                location_ids = [w.input_location.id for w in warehouses
-                    if w.input_location]
-            elif name == 'outgoing_quantity':
-                location_ids = [w.output_location.id for w in warehouses
-                    if w.output_location]
-            else:
+            elif config.warehouse_quantity == 'all':
+                warehouses = Location.search([('type', '=', 'warehouse')])
+            if warehouses:
                 location_ids = [w.storage_location.id for w in warehouses
                     if w.storage_location]
         return location_ids
@@ -84,6 +65,85 @@ class QuantityMixin:
     def search_quantity(cls, name, domain=None):
         with Transaction().set_context(locations=cls._quantity_locations(name)):
             return super().search_quantity(name, domain)
+
+
+class QuantityByMixin:
+    __slots__ = ()
+    incoming_quantity = fields.Function(fields.Float('Incoming Quantity'),
+        'get_in_out_quantity',searcher='search_in_out_quantity')
+    outgoing_quantity = fields.Function(fields.Float('Outgoing Quantity'),
+        'get_in_out_quantity', searcher='search_in_out_quantity')
+
+    @classmethod
+    def get_in_out_quantity(cls, products, name):
+        location_ids = Transaction().context.get('locations')
+        product_ids = list(map(int, products))
+        res = dict((x, 0) for x in product_ids)
+        if not products:
+            return res
+
+        direction = 'in' if name == 'incoming_quantity' else 'out'
+        quantities = cls._get_in_out_quantity(product_ids, direction)
+        if quantities:
+            for product_id in product_ids:
+                res[product_id] = quantities.get(product_id, 0)
+        return res
+
+    @classmethod
+    def _get_in_out_quantity(cls, product_ids, direction='in'):
+        pool = Pool()
+        Date = pool.get('ir.date')
+        Product = pool.get('product.product')
+        Location = pool.get('stock.location')
+        Move = pool.get('stock.move')
+
+        move = Move.__table__()
+
+        transaction = Transaction()
+        context = transaction.context
+        cursor = transaction.connection.cursor()
+
+        location_ids = context.get('locations')
+        if not location_ids:
+            location_ids = cls._quantity_locations()
+        if not location_ids:
+            return
+
+        locations = Location.search([
+                ('parent', 'child_of', location_ids),
+                ('type', '=', 'storage'),
+                ])
+        location_ids = list(set(x.id for x in locations))
+
+        sql_where = move.product.in_(product_ids)
+        sql_where &= move.company == context.get('company', -1)
+        sql_where &= ~move.state.in_(('done', 'cancelled'))
+        if direction == 'in':
+            location_supplier_ids = [l.id for l in Location.search([
+                ('type', '=', 'supplier'),
+                ])]
+            sql_where &= move.from_location.in_(location_supplier_ids)
+            sql_where &= move.to_location.in_(location_ids)
+        else:
+            location_customer_ids = [l.id for l in Location.search([
+                ('type', '=', 'customer'),
+                ])]
+            sql_where &= move.from_location.in_(location_ids)
+            sql_where &= move.to_location.in_(location_customer_ids)
+
+        query = move.select(
+            move.product,
+            Coalesce(Sum(move.internal_quantity), 0).as_('quantity'),
+            where=sql_where,
+            group_by=move.product)
+        cursor.execute(*query)
+
+        return {product_id: quantity for product_id, quantity in cursor.fetchall()}
+
+    @classmethod
+    def search_in_out_quantity(cls, name, domain=None):
+        # TODO
+        pass
 
 
 class Template(metaclass=PoolMeta):
@@ -100,5 +160,5 @@ class Template(metaclass=PoolMeta):
             if hasattr(p, name)])
 
 
-class Product(QuantityMixin, metaclass=PoolMeta):
+class Product(QuantityMixin, QuantityByMixin, metaclass=PoolMeta):
     __name__ = 'product.product'
