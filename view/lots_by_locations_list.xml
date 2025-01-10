@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<data>
+    <xpath expr="/tree/field[@name='forecast_quantity']" position="replace">
+        <field name="forecast_quantity" symbol="default_uom" optional="0"/>
+        <field name="available_quantity" symbol="default_uom" optional="0"/>
+        <field name="incoming_quantity" symbol="default_uom" optional="0"/>
+        <field name="outgoing_quantity" symbol="default_uom" optional="0"/>
+    </xpath>
+</data>
