@@ -9,8 +9,10 @@ from trytond.modules.company.model import CompanyValueMixin
 warehouse_quantity = fields.Selection([
         ('all', 'All Warehouses'),
         ('user', 'User Warehouse'),
-    ], 'Warehouse Quantity')
-lag_days = fields.Numeric('Number of lag days', digits=(16, 0))
+    ], 'Warehouse Quantity', help="Warehouse to use in Quantity fields in the product.")
+lag_days = fields.Numeric('Number of lag days', digits=(16, 0), help="Number of days "
+    "to be added to the current day to compute Forecast, Incoming and Outgoing Quantity "
+    "fields in product. Leave empty to take into account all future moves.")
 
 
 class Configuration(metaclass=PoolMeta):
