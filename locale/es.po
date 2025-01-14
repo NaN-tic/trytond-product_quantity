@@ -1,0 +1,136 @@
+#
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "field:product.product,available_quantity:"
+msgid "Available Quantity"
+msgstr "Cantidad disponible"
+
+msgctxt "field:product.product,incoming_quantity:"
+msgid "Incoming Quantity"
+msgstr "Cantidad entradas"
+
+msgctxt "field:product.product,outgoing_quantity:"
+msgid "Outgoing Quantity"
+msgstr "Cantidad salidas"
+
+msgctxt "field:product.template,available_quantity:"
+msgid "Available Quantity"
+msgstr "Cantidad disponible"
+
+msgctxt "field:product.template,incoming_quantity:"
+msgid "Incoming Quantity"
+msgstr "Cantidad entradas"
+
+msgctxt "field:product.template,outgoing_quantity:"
+msgid "Outgoing Quantity"
+msgstr "Cantidad salidas"
+
+msgctxt "field:stock.configuration,lag_days:"
+msgid "Number of lag days"
+msgstr "Número de días de desfase"
+
+msgctxt "field:stock.configuration,warehouse_quantity:"
+msgid "Warehouse Quantity"
+msgstr "Cantidad del almacén"
+
+msgctxt "field:stock.configuration.product_quantity,company:"
+msgid "Company"
+msgstr "Empresa"
+
+msgctxt "field:stock.configuration.product_quantity,lag_days:"
+msgid "Number of lag days"
+msgstr "Número de días de desfase"
+
+msgctxt "field:stock.configuration.product_quantity,warehouse_quantity:"
+msgid "Warehouse Quantity"
+msgstr "Cantidad del almacén"
+
+msgctxt "field:stock.location,available_quantity:"
+msgid "Available Quantity"
+msgstr "Cantidad disponible"
+
+msgctxt "field:stock.lot,available_quantity:"
+msgid "Available Quantity"
+msgstr "Cantidad disponible"
+
+msgctxt "field:stock.lot,incoming_quantity:"
+msgid "Incoming Quantity"
+msgstr "Cantidad entradas"
+
+msgctxt "field:stock.lot,outgoing_quantity:"
+msgid "Outgoing Quantity"
+msgstr "Cantidad salidas"
+
+msgctxt "field:stock.lots_by_locations,available_quantity:"
+msgid "Available Quantity"
+msgstr "Cantidad disponible"
+
+msgctxt "field:stock.lots_by_locations,incoming_quantity:"
+msgid "Incoming Quantity"
+msgstr "Cantidad entradas"
+
+msgctxt "field:stock.lots_by_locations,outgoing_quantity:"
+msgid "Outgoing Quantity"
+msgstr "Cantidad salidas"
+
+msgctxt "field:stock.products_by_locations,available_quantity:"
+msgid "Available Quantity"
+msgstr "Cantidad disponible"
+
+#, fuzzy
+msgctxt "field:stock.products_by_locations,incoming_quantity:"
+msgid "Incoming Quantity"
+msgstr "Cantidad entradas"
+
+msgctxt "field:stock.products_by_locations,outgoing_quantity:"
+msgid "Outgoing Quantity"
+msgstr "Cantidad salidas"
+
+msgctxt "help:stock.configuration,lag_days:"
+msgid ""
+"Number of days to be added to the current day to compute Forecast, Incoming "
+"and Outgoing Quantity fields in product. Leave empty to take into account "
+"all future moves."
+msgstr ""
+"Número de días que se deben agregar al día actual para calcular los campos "
+"de Cantidad de entrada, Cantidad de salida y Pronóstico en el producto. "
+"Déjelo en blanco para tener en cuenta todos los movimientos futuros."
+
+msgctxt "help:stock.configuration,warehouse_quantity:"
+msgid "Warehouse to use in Quantity fields in the product."
+msgstr "Almacén a utilizar en los campos de Cantidad en el producto."
+
+msgctxt "help:stock.configuration.product_quantity,lag_days:"
+msgid ""
+"Number of days to be added to the current day to compute Forecast, Incoming "
+"and Outgoing Quantity fields in product. Leave empty to take into account "
+"all future moves."
+msgstr ""
+"Número de días que se deben agregar al día actual para calcular los campos "
+"de Cantidad de entrada, Cantidad de salida y Pronóstico en el producto. "
+"Déjelo en blanco para tener en cuenta todos los movimientos futuros."
+
+msgctxt "help:stock.configuration.product_quantity,warehouse_quantity:"
+msgid "Warehouse to use in Quantity fields in the product."
+msgstr "Almacén a utilizar en los campos de Cantidad en el producto."
+
+msgctxt "model:stock.configuration.product_quantity,name:"
+msgid "Stock Configuration - Product Quantity"
+msgstr "Configuración stock - Cantidad producto"
+
+msgctxt "selection:stock.configuration,warehouse_quantity:"
+msgid "All Warehouses"
+msgstr "Todos los almacenes"
+
+msgctxt "selection:stock.configuration,warehouse_quantity:"
+msgid "User Warehouse"
+msgstr "Almacén del usuario"
+
+msgctxt "selection:stock.configuration.product_quantity,warehouse_quantity:"
+msgid "All Warehouses"
+msgstr "Todos los almacenes"
+
+msgctxt "selection:stock.configuration.product_quantity,warehouse_quantity:"
+msgid "User Warehouse"
+msgstr "Almacén del usuario"
