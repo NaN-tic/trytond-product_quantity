@@ -50,14 +50,6 @@ msgctxt "field:stock.location,available_quantity:"
 msgid "Available Quantity"
 msgstr "Cantidad disponible"
 
-msgctxt "field:stock.location,incoming_quantity:"
-msgid "Incoming Quantity"
-msgstr "Cantidad entradas"
-
-msgctxt "field:stock.location,outgoing_quantity:"
-msgid "Outgoing Quantity"
-msgstr "Cantidad salidas"
-
 msgctxt "field:stock.lot,available_quantity:"
 msgid "Available Quantity"
 msgstr "Cantidad disponible"
@@ -69,6 +61,59 @@ msgstr "Cantidad entradas"
 msgctxt "field:stock.lot,outgoing_quantity:"
 msgid "Outgoing Quantity"
 msgstr "Cantidad salidas"
+
+msgctxt "field:stock.lots_by_locations,available_quantity:"
+msgid "Available Quantity"
+msgstr "Cantidad disponible"
+
+msgctxt "field:stock.lots_by_locations,incoming_quantity:"
+msgid "Incoming Quantity"
+msgstr "Cantidad entradas"
+
+msgctxt "field:stock.lots_by_locations,outgoing_quantity:"
+msgid "Outgoing Quantity"
+msgstr "Cantidad salidas"
+
+msgctxt "field:stock.products_by_locations,available_quantity:"
+msgid "Available Quantity"
+msgstr "Cantidad disponible"
+
+#, fuzzy
+msgctxt "field:stock.products_by_locations,incoming_quantity:"
+msgid "Incoming Quantity"
+msgstr "Cantidad entradas"
+
+msgctxt "field:stock.products_by_locations,outgoing_quantity:"
+msgid "Outgoing Quantity"
+msgstr "Cantidad salidas"
+
+msgctxt "help:stock.configuration,lag_days:"
+msgid ""
+"Number of days to be added to the current day to compute Forecast, Incoming "
+"and Outgoing Quantity fields in product. Leave empty to take into account "
+"all future moves."
+msgstr ""
+"Número de días que se deben agregar al día actual para calcular los campos "
+"de Cantidad de entrada, Cantidad de salida y Pronóstico en el producto. "
+"Déjelo en blanco para tener en cuenta todos los movimientos futuros."
+
+msgctxt "help:stock.configuration,warehouse_quantity:"
+msgid "Warehouse to use in Quantity fields in the product."
+msgstr "Almacén a utilizar en los campos de Cantidad en el producto."
+
+msgctxt "help:stock.configuration.product_quantity,lag_days:"
+msgid ""
+"Number of days to be added to the current day to compute Forecast, Incoming "
+"and Outgoing Quantity fields in product. Leave empty to take into account "
+"all future moves."
+msgstr ""
+"Número de días que se deben agregar al día actual para calcular los campos "
+"de Cantidad de entrada, Cantidad de salida y Pronóstico en el producto. "
+"Déjelo en blanco para tener en cuenta todos los movimientos futuros."
+
+msgctxt "help:stock.configuration.product_quantity,warehouse_quantity:"
+msgid "Warehouse to use in Quantity fields in the product."
+msgstr "Almacén a utilizar en los campos de Cantidad en el producto."
 
 msgctxt "model:stock.configuration.product_quantity,name:"
 msgid "Stock Configuration - Product Quantity"
