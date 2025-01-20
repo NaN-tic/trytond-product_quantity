@@ -1,10 +1,8 @@
 # This file is part product_quantity module for Tryton.
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
-from dateutil.relativedelta import relativedelta
-from trytond.pool import Pool, PoolMeta
+from trytond.pool import PoolMeta
 from trytond.model import fields
-from trytond.transaction import Transaction
 from trytond.modules.product_quantity.product import QuantityMixin, QuantityByMixin
 
 

@@ -77,7 +77,6 @@ class QuantityByMixin:
 
     @classmethod
     def get_in_out_quantity(cls, products, name):
-        location_ids = Transaction().context.get('locations')
         product_ids = list(map(int, products))
         res = dict((x, 0) for x in product_ids)
         if not products:
@@ -92,8 +91,6 @@ class QuantityByMixin:
     @classmethod
     def _get_in_out_quantity(cls, product_ids=[], direction='in'):
         pool = Pool()
-        Date = pool.get('ir.date')
-        Product = pool.get('product.product')
         Location = pool.get('stock.location')
         Move = pool.get('stock.move')
 
