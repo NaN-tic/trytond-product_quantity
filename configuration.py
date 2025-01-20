@@ -20,6 +20,10 @@ class Configuration(metaclass=PoolMeta):
     warehouse_quantity = fields.MultiValue(warehouse_quantity)
     lag_days = fields.MultiValue(lag_days)
 
+    @staticmethod
+    def default_warehouse_quantity():
+        return 'user'
+
     @classmethod
     def multivalue_model(cls, field):
         pool = Pool()
