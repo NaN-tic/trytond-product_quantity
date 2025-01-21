@@ -20,8 +20,8 @@ class Configuration(metaclass=PoolMeta):
     warehouse_quantity = fields.MultiValue(warehouse_quantity)
     lag_days = fields.MultiValue(lag_days)
 
-    @staticmethod
-    def default_warehouse_quantity():
+    @classmethod
+    def default_warehouse_quantity(cls, **pattern):
         return 'user'
 
     @classmethod
