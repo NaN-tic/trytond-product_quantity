@@ -15,14 +15,19 @@ lag_days = fields.Numeric('Number of lag days', digits=(16, 0), help="Number of 
     "fields in product. Leave empty to take into account all future moves.")
 
 
+def default_func(field_name):
+    @classmethod
+    def default(cls, **pattern):
+        return getattr(
+            cls.multivalue_model(field_name),
+            'default_%s' % field_name, lambda: None)()
+    return default
+
+
 class Configuration(metaclass=PoolMeta):
     __name__ = 'stock.configuration'
     warehouse_quantity = fields.MultiValue(warehouse_quantity)
     lag_days = fields.MultiValue(lag_days)
-
-    @classmethod
-    def default_warehouse_quantity(cls, **pattern):
-        return 'user'
 
     @classmethod
     def multivalue_model(cls, field):
@@ -31,9 +36,15 @@ class Configuration(metaclass=PoolMeta):
             return pool.get('stock.configuration.product_quantity')
         return super(Configuration, cls).multivalue_model(field)
 
+    default_warehouse_quantity = default_func('warehouse_quantity')
+
 
 class ConfigurationProductQuantity(ModelSQL, CompanyValueMixin):
     "Stock Configuration - Product Quantity"
     __name__ = 'stock.configuration.product_quantity'
     warehouse_quantity = warehouse_quantity
     lag_days = lag_days
+
+    @classmethod
+    def default_warehouse_quantity(cls):
+        return 'all'
