@@ -50,7 +50,8 @@ class QuantityMixin:
             warehouses = []
             if warehouse_id and config.warehouse_quantity == 'user':
                 warehouses = [Location(warehouse_id)]
-            elif config.warehouse_quantity == 'all':
+            elif (config.warehouse_quantity == 'all'
+                    or config.warehouse_quantity is None):
                 warehouses = Location.search([('type', '=', 'warehouse')])
             if warehouses:
                 location_ids = [w.storage_location.id for w in warehouses
