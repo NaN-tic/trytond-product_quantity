@@ -2,5 +2,7 @@
     <xpath expr="/form/notebook/page[@id='general']/field[@name='cost_price_method']" position="after">
         <label name="quantity"/>
         <field name="quantity"/>
+        <label name="available_quantity"/>
+        <field name="available_quantity"/>
     </xpath>
 </data>
