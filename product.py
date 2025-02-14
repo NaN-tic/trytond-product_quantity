@@ -112,6 +112,8 @@ class QuantityByMixin:
                 ('type', '=', 'storage'),
                 ])
         location_ids = list(set(x.id for x in locations))
+        if not location_ids:
+            return {}
 
         sql_where = move.company == context.get('company', -1)
         sql_where &= move.state == 'draft'
@@ -121,12 +123,16 @@ class QuantityByMixin:
             location_supplier_ids = [l.id for l in Location.search([
                 ('type', '=', 'supplier'),
                 ])]
+            if not location_supplier_ids:
+                return {}
             sql_where &= move.from_location.in_(location_supplier_ids)
             sql_where &= move.to_location.in_(location_ids)
         else:
             location_customer_ids = [l.id for l in Location.search([
                 ('type', '=', 'customer'),
                 ])]
+            if not location_customer_ids:
+                return {}
             sql_where &= move.from_location.in_(location_ids)
             sql_where &= move.to_location.in_(location_customer_ids)
 
