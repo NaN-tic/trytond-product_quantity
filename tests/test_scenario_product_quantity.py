@@ -190,16 +190,16 @@ class Test(unittest.TestCase):
         move.click('do')
 
         product2.reload()
-        self.assertEqual(product2.quantity, 80.0)
-        self.assertEqual(product2.forecast_quantity, 80.0)
-        self.assertEqual(product2.available_quantity, 80.0)
+        self.assertEqual(product2.quantity, 110.0)
+        self.assertEqual(product2.forecast_quantity, 110.0)
+        self.assertEqual(product2.available_quantity, 110.0)
         self.assertEqual(product2.incoming_quantity, 0.0)
         self.assertEqual(product2.outgoing_quantity, 0.0)
 
         product_by_loc2.reload()
-        self.assertEqual(product_by_loc2.quantity, 80.0)
-        self.assertEqual(product_by_loc2.forecast_quantity, 80.0)
-        self.assertEqual(product_by_loc2.available_quantity, 80.0)
+        self.assertEqual(product_by_loc2.quantity, 110.0)
+        self.assertEqual(product_by_loc2.forecast_quantity, 110.0)
+        self.assertEqual(product_by_loc2.available_quantity, 110.0)
         self.assertEqual(product_by_loc2.incoming_quantity, 0.0)
         self.assertEqual(product_by_loc2.outgoing_quantity, 0.0)
 
@@ -211,7 +211,7 @@ class Test(unittest.TestCase):
             unit=product2.default_uom,
             unit_price=Decimal(10),
             currency=company.currency,
-            quantity=80.0,
+            quantity=110.0,
             )
         move.save()
         move.click('do')

@@ -52,20 +52,30 @@ class QuantityMixin:
                 warehouses = [Location(warehouse_id)]
             elif config.warehouse_quantity == 'all':
                 warehouses = Location.search([('type', '=', 'warehouse')])
+
             if warehouses:
-                location_ids = [w.storage_location.id for w in warehouses
-                    if w.storage_location]
+                location_ids = [w.id for w in warehouses]
         return location_ids
 
     @classmethod
     def get_quantity(cls, products, name):
-        with Transaction().set_context(locations=cls._quantity_locations(name)):
-            return super().get_quantity(products, name)
+        context = Transaction().context
+
+        if not context.get('locations'):
+            with Transaction().set_context(locations=cls._quantity_locations(name),
+                    with_childs=True):
+                return super().get_quantity(products, name)
+        return super().get_quantity(products, name)
 
     @classmethod
     def search_quantity(cls, name, domain=None):
-        with Transaction().set_context(locations=cls._quantity_locations(name)):
-            return super().search_quantity(name, domain)
+        context = Transaction().context
+
+        if not context.get('locations'):
+            with Transaction().set_context(locations=cls._quantity_locations(name),
+                    with_childs=True):
+                return super().search_quantity(name, domain)
+        return super().search_quantity(name, domain)
 
 
 class QuantityByMixin:
@@ -77,7 +87,6 @@ class QuantityByMixin:
 
     @classmethod
     def get_in_out_quantity(cls, products, name):
-        location_ids = Transaction().context.get('locations')
         product_ids = list(map(int, products))
         res = dict((x, 0) for x in product_ids)
         if not products:
@@ -92,8 +101,6 @@ class QuantityByMixin:
     @classmethod
     def _get_in_out_quantity(cls, product_ids=[], direction='in'):
         pool = Pool()
-        Date = pool.get('ir.date')
-        Product = pool.get('product.product')
         Location = pool.get('stock.location')
         Move = pool.get('stock.move')
 
