@@ -53,20 +53,30 @@ class QuantityMixin:
             elif (config.warehouse_quantity == 'all'
                     or config.warehouse_quantity is None):
                 warehouses = Location.search([('type', '=', 'warehouse')])
+
             if warehouses:
-                location_ids = [w.storage_location.id for w in warehouses
-                    if w.storage_location]
+                location_ids = [w.id for w in warehouses]
         return location_ids
 
     @classmethod
     def get_quantity(cls, products, name):
-        with Transaction().set_context(locations=cls._quantity_locations(name)):
-            return super().get_quantity(products, name)
+        context = Transaction().context
+
+        if not context.get('locations'):
+            with Transaction().set_context(locations=cls._quantity_locations(name),
+                    with_childs=True):
+                return super().get_quantity(products, name)
+        return super().get_quantity(products, name)
 
     @classmethod
     def search_quantity(cls, name, domain=None):
-        with Transaction().set_context(locations=cls._quantity_locations(name)):
-            return super().search_quantity(name, domain)
+        context = Transaction().context
+
+        if not context.get('locations'):
+            with Transaction().set_context(locations=cls._quantity_locations(name),
+                    with_childs=True):
+                return super().search_quantity(name, domain)
+        return super().search_quantity(name, domain)
 
 
 class QuantityByMixin:
