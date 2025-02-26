@@ -78,10 +78,9 @@ msgctxt "field:stock.products_by_locations,available_quantity:"
 msgid "Available Quantity"
 msgstr "Cantidad disponible"
 
-#, fuzzy
 msgctxt "field:stock.products_by_locations,incoming_quantity:"
 msgid "Incoming Quantity"
-msgstr "Cantidad entradas"
+msgstr "Cantidad entrante"
 
 msgctxt "field:stock.products_by_locations,outgoing_quantity:"
 msgid "Outgoing Quantity"
@@ -134,3 +133,7 @@ msgstr "Todos los almacenes"
 msgctxt "selection:stock.configuration.product_quantity,warehouse_quantity:"
 msgid "User Warehouse"
 msgstr "Almacén del usuario"
+
+msgctxt "view:stock.configuration:"
+msgid "Product Quantity"
+msgstr "Cantidad de producto"
