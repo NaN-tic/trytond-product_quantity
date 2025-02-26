@@ -133,3 +133,7 @@ msgstr "Tots els magatzems"
 msgctxt "selection:stock.configuration.product_quantity,warehouse_quantity:"
 msgid "User Warehouse"
 msgstr "Magatzem de l'usuari"
+
+msgctxt "view:stock.configuration:"
+msgid "Product Quantity"
+msgstr "Quantitat de producte"
