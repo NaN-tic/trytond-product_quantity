@@ -5,6 +5,7 @@ copyright notices and license terms. -->
 <data>
     <xpath expr="/form/field[@name='inventory_sequence']" position="after">
         <newline/>
+        <separator id="product_quantity" colspan="4" string="Product Quantity"/>
         <label name="warehouse_quantity"/>
         <field name="warehouse_quantity"/>
         <label name="lag_days"/>
