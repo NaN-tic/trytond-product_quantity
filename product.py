@@ -64,7 +64,7 @@ class QuantityMixin:
 
         if not context.get('locations'):
             with Transaction().set_context(locations=cls._quantity_locations(name),
-                    with_childs=True):
+                    with_childs=context.get('with_childs', True)):
                 return super().get_quantity(products, name)
         return super().get_quantity(products, name)
 
@@ -74,7 +74,7 @@ class QuantityMixin:
 
         if not context.get('locations'):
             with Transaction().set_context(locations=cls._quantity_locations(name),
-                    with_childs=True):
+                    with_childs=context.get('with_childs', True)):
                 return super().search_quantity(name, domain)
         return super().search_quantity(name, domain)
 
