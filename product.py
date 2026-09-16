@@ -10,6 +10,29 @@ from sql.aggregate import Sum
 from sql.conditionals import Coalesce
 
 
+class ProductQuantityLineMixin:
+    __slots__ = ()
+
+    forecast_quantity = fields.Function(
+        fields.Float('Forecast Quantity'),
+        'get_product_quantity')
+    available_quantity = fields.Function(
+        fields.Float('Available Quantity'),
+        'get_product_quantity')
+    incoming_quantity = fields.Function(
+        fields.Float('Incoming Quantity'),
+        'get_product_quantity')
+    outgoing_quantity = fields.Function(
+        fields.Float('Outgoing Quantity'),
+        'get_product_quantity')
+
+    @fields.depends('product')
+    def get_product_quantity(self, name):
+        if self.product:
+            return getattr(self.product, name)
+        return None
+
+
 class QuantityMixin:
     __slots__ = ()
     available_quantity = fields.Function(fields.Float('Available Quantity'),

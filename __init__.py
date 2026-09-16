@@ -4,6 +4,8 @@
 from trytond.pool import Pool
 from . import configuration
 from . import product
+from . import purchase
+from . import sale
 from . import stock
 
 def register():
@@ -19,4 +21,16 @@ def register():
         stock.Lot,
         stock.LotsByLocations,
         depends=['stock_lot'],
+        module='product_quantity', type_='model')
+    Pool.register(
+        sale.SaleLine,
+        depends=['sale'],
+        module='product_quantity', type_='model')
+    Pool.register(
+        purchase.PurchaseLine,
+        depends=['purchase'],
+        module='product_quantity', type_='model')
+    Pool.register(
+        purchase.PurchaseRequest,
+        depends=['purchase_request'],
         module='product_quantity', type_='model')

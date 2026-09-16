@@ -26,6 +26,54 @@ msgctxt "field:product.template,outgoing_quantity:"
 msgid "Outgoing Quantity"
 msgstr "Cantidad salidas"
 
+msgctxt "field:purchase.line,available_quantity:"
+msgid "Available Quantity"
+msgstr "Cantidad disponible"
+
+msgctxt "field:purchase.line,forecast_quantity:"
+msgid "Forecast Quantity"
+msgstr "Cantidad prevista"
+
+msgctxt "field:purchase.line,incoming_quantity:"
+msgid "Incoming Quantity"
+msgstr "Cantidad entradas"
+
+msgctxt "field:purchase.line,outgoing_quantity:"
+msgid "Outgoing Quantity"
+msgstr "Cantidad salidas"
+
+msgctxt "field:purchase.request,available_quantity:"
+msgid "Available Quantity"
+msgstr "Cantidad disponible"
+
+msgctxt "field:purchase.request,forecast_quantity:"
+msgid "Forecast Quantity"
+msgstr "Cantidad prevista"
+
+msgctxt "field:purchase.request,incoming_quantity:"
+msgid "Incoming Quantity"
+msgstr "Cantidad entradas"
+
+msgctxt "field:purchase.request,outgoing_quantity:"
+msgid "Outgoing Quantity"
+msgstr "Cantidad salidas"
+
+msgctxt "field:sale.line,available_quantity:"
+msgid "Available Quantity"
+msgstr "Cantidad disponible"
+
+msgctxt "field:sale.line,forecast_quantity:"
+msgid "Forecast Quantity"
+msgstr "Cantidad prevista"
+
+msgctxt "field:sale.line,incoming_quantity:"
+msgid "Incoming Quantity"
+msgstr "Cantidad entradas"
+
+msgctxt "field:sale.line,outgoing_quantity:"
+msgid "Outgoing Quantity"
+msgstr "Cantidad salidas"
+
 msgctxt "field:stock.configuration,lag_days:"
 msgid "Number of lag days"
 msgstr "Número de días de desfase"
