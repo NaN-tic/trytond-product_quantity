@@ -32,6 +32,22 @@ class ProductQuantityLineMixin:
             return getattr(self.product, name)
         return None
 
+    @fields.depends('product')
+    def on_change_with_forecast_quantity(self, name=None):
+        return self.product and self.product.forecast_quantity
+
+    @fields.depends('product')
+    def on_change_with_available_quantity(self, name=None):
+        return self.product and self.product.available_quantity
+
+    @fields.depends('product')
+    def on_change_with_incoming_quantity(self, name=None):
+        return self.product and self.product.incoming_quantity
+
+    @fields.depends('product')
+    def on_change_with_outgoing_quantity(self, name=None):
+        return self.product and self.product.outgoing_quantity
+
 
 class QuantityMixin:
     __slots__ = ()
