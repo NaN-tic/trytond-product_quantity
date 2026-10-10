@@ -222,11 +222,14 @@ class QuantityByMixin:
 
 class Template(metaclass=PoolMeta):
     __name__ = 'product.template'
-    available_quantity = fields.Function(fields.Float('Available Quantity'),
+    available_quantity = fields.Function(fields.Float(
+            'Available Quantity', digits='default_uom'),
         'get_product_quantity')
-    incoming_quantity = fields.Function(fields.Float('Incoming Quantity'),
+    incoming_quantity = fields.Function(fields.Float(
+            'Incoming Quantity', digits='default_uom'),
         'get_product_quantity')
-    outgoing_quantity = fields.Function(fields.Float('Outgoing Quantity'),
+    outgoing_quantity = fields.Function(fields.Float(
+            'Outgoing Quantity', digits='default_uom'),
         'get_product_quantity')
 
     def get_product_quantity(self, name):
